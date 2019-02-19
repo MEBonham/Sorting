@@ -24,8 +24,8 @@ def merge( arrA, arrB ):
 ### recursive sorting function
 def merge_sort( arr ):
     if len( arr ) > 1:
-        left = merge_sort( arr[ 0 : len( arr ) / 2 ] )
-        right = merge_sort( arr[ len( arr ) / 2 : ] )
+        left = merge_sort( arr[ 0 : len( arr ) // 2 ] )
+        right = merge_sort( arr[ len( arr ) // 2 : ] )
         arr = merge( left, right )   # merge() defined later
     return arr
 
@@ -60,13 +60,14 @@ def quick_sort( arr, low, high ):
     
     def partition(arr, low, high):
         # Set up the pivot
-        pivot_index = median_of_3(arr, low, high - 1)
+        pivot_index = median_of_3(arr, low, high)
         pivot = arr[pivot_index]
-        arr[pivot_index], arr[high - 1] = arr[high - 1], pivot
+        print("Pivot: " + str(pivot))
+        arr[pivot_index], arr[high] = arr[high], pivot
 
         # Work two indeces inward from the outside to the middle, switching their values when they are both on the wrong
         # sides of the pivot, and stopping when they meet in the middle
-        i, j = low, high - 2
+        i, j = low, high - 1
         while j > i:
             
             # If both values are already on the correct side of the partition, move them inwards (unless they would pass each
@@ -85,16 +86,19 @@ def quick_sort( arr, low, high ):
                 j -= 1
 
         # If any values were greater than pivot, put the pivot value in the position where the two moving indeces met
-        if j < high - 2:
-            arr[i], arr[high - 1] = arr[high - 1], arr[i]
+        if j < high - 1 or arr[j] > arr[high]:
+            arr[i], arr[high] = arr[high], arr[i]
+        print(arr[low : high + 1])
+        print(f'i = {i}, j = {j}')
 
         # Return where the pivot is
         return i
 
+    print(arr[low : high + 1])
     # Non-Base Case, Recursive Invocation:
-    if high - low > 1:      # If there are at least two elements to be sorted
+    if high > low:      # If there are at least two elements to be sorted
         pivot_index = partition(arr, low, high)
-        quick_sort(arr, low, pivot_index)
+        quick_sort(arr, low, pivot_index - 1)
         quick_sort(arr, pivot_index + 1, high)
     
     return arr
