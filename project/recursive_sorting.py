@@ -62,7 +62,6 @@ def quick_sort( arr, low, high ):
         # Set up the pivot
         pivot_index = median_of_3(arr, low, high)
         pivot = arr[pivot_index]
-        print("Pivot: " + str(pivot))
         arr[pivot_index], arr[high] = arr[high], pivot
 
         # Work two indeces inward from the outside to the middle, switching their values when they are both on the wrong
@@ -88,13 +87,10 @@ def quick_sort( arr, low, high ):
         # If any values were greater than pivot, put the pivot value in the position where the two moving indeces met
         if j < high - 1 or arr[j] > arr[high]:
             arr[i], arr[high] = arr[high], arr[i]
-        print(arr[low : high + 1])
-        print(f'i = {i}, j = {j}')
 
         # Return where the pivot is
         return i
 
-    print(arr[low : high + 1])
     # Non-Base Case, Recursive Invocation:
     if high > low:      # If there are at least two elements to be sorted
         pivot_index = partition(arr, low, high)
